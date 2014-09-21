@@ -1,23 +1,16 @@
-FROM ubuntu:14.04
+FROM google/golang
 
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y curl git mercurial make binutils bison gcc build-essential golang
+WORKDIR /gopath/src/github.com/erlendr/uploader
+ADD . /gopath/src/github.com/erlendr/uploader/
 
-# Set GOPATH/GOROOT environment variables
-RUN mkdir -p /go
-ENV GOPATH /go
-ENV PATH $GOPATH/bin:$PATH
+#temp dir for uploads
+RUN mkdir /gopath/src/github.com/erlendr/uploader/temp
+RUN chmod 777 /gopath/src/github.com/erlendr/uploader/temp
 
-# Set up app
-ADD . /app
-RUN cd /app && go build server.go
+# get dependencies
+RUN go get github.com/erlendr/store
+RUN go get github.com/go-martini/martini
+RUN go get github.com/erlendr/uploader
 
-# Removed unnecessary packages
-RUN apt-get autoremove -y
-
-# Clear package repository cache
-RUN apt-get clean all
-
-EXPOSE 3000
-CMD ["/app/server"]
+CMD []
+ENTRYPOINT ["/gopath/bin/uploader"]
