@@ -20,4 +20,4 @@ RUN apt-get autoremove -y
 RUN apt-get clean all
 
 EXPOSE 3000
-CMD ["/app/hello"]
+CMD ["/app/server"]
