@@ -1,8 +1,5 @@
 {
 	"AWSEBDockerrunVersion": "1",
-	"Image": {
-		"Name": "_/golang"
-	},
 	"Ports": [
 		{"ContainerPort": "3000"}
 	]
